@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
@@ -13,7 +15,7 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					{store.currentUserEmail ? <button className="btn btn-danger" onClick={async () => {
 						if (await actions.logout()) {
-							Navigate("/")
+							navigate("/")
 						}
 					}}>Logout</button> :
 						<>
