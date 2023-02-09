@@ -7,24 +7,26 @@ export const Register = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState(false);
+	const [name, setName] = useState("");
+	const [error, setError] = useState("");
 
 	const sendRegisterCredential = async () => {
-		const response = await fetch("https://3001-dedalovitor-finalprojec-a0jo62diwst.ws-eu85.gitpod.io/api/register", {
+		const response = await fetch("https://3001-dedalovitor-finalprojec-a0jo62diwst.ws-eu86.gitpod.io/api/register", {
 			method: "POST",
 			headers: {
 				"content-Type": "application/json"
 			},
 			body: JSON.stringify({
+				name: name,
 				email: email,
-				password: password,
+				password: password
 			})
 		});
+		const data = await response.json();
 		if (response.ok) {
-			const data = await response.json();
 			navigate("/login");
 		} else {
-			setError(true)
+			setError(data.response);
 		}
 
 
@@ -32,8 +34,16 @@ export const Register = () => {
 
 	return (
 		<div className="text-center mt-5">
-			LOGIN
+			Register
 			<div>
+				<div>
+					<label htmlFor="name">Name</label>
+					<input name="name" placeholder="name" value={name} onChange={(e) => {
+						setError(false);
+						setName(e.target.value);
+					}
+					}></input>
+				</div>
 				<div>
 					<label htmlFor="email">Email</label>
 					<input name="email" placeholder="email" value={email} onChange={(e) => {
@@ -50,8 +60,8 @@ export const Register = () => {
 					}
 					}></input>
 				</div>
-				<button className="btn btn-primary" onClick={() => sendLoginCredential()}>Login</button>
-				{error ? <p className="alert alert-danger">Error en credenciales</p> : null}
+				<button className="btn btn-primary" onClick={() => sendRegisterCredential()}>Register</button>
+				{error ? <p className="alert alert-danger">{error}</p> : null}
 			</div>
 		</div>
 	);

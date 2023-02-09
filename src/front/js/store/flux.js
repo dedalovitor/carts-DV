@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		actions: {
 			getCurrentUserEmail: async () => {
-				const response = await fetch("https://3001-dedalovitor-finalprojec-a0jo62diwst.ws-eu85.gitpod.io/api/user", {
+				const response = await fetch("https://3001-dedalovitor-finalprojec-a0jo62diwst.ws-eu86.gitpod.io/api/user", {
 					headers: {
 						"Authorization": "Bearer " + localStorage.getItem("token")
 					}

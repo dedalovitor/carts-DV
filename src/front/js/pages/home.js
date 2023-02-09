@@ -8,7 +8,7 @@ export const Home = () => {
 
 	return (
 		<div className="container">
-			{store.currentUserEmail ? "Hola usuario" + store.currentUserEmail : "Please register or login"}
+			{store.currentUserEmail ? "Hola usuario " + store.currentUserEmail : "Please register or login"}
 		</div>
 	);
 };

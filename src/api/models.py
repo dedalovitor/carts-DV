@@ -11,9 +11,10 @@ class User(db.Model):
     favorites= db.relationship('Favorites') 
     def serialize(self):
         return {
+            "name": self.name,
             "id": self.id,
-            "email": self.email,
-            "name": self.name
+            "email": self.email
+            
             # do not serialize the password, its a security breach
         }
     def __repr__(self):
