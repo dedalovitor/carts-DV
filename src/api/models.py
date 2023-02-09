@@ -9,6 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     favorites= db.relationship('Favorites') 
+    pets = db.relationship("Pet", backref="user")
     def serialize(self):
         return {
             "name": self.name,
@@ -19,6 +20,20 @@ class User(db.Model):
         }
     def __repr__(self):
         return f'{self.name}'
+
+
+
+class Pet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    age = db.Column(db.Integer, unique=False, nullable=False)
+    race = db.Column(db.String(120), unique=False, nullable=False)
+    castrated = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    def __repr__(self):
+        return f'{self.name}'
+    
+
 
 class User_region(db.Model):
     id = db.Column(db.Integer, primary_key=True)
