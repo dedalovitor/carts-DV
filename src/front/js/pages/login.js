@@ -10,7 +10,7 @@ export const Login = () => {
 	const [error, setError] = useState(false);
 
 	const sendLoginCredential = async () => {
-		const response = await fetch("https://3001-dedalovitor-finalprojec-a0jo62diwst.ws-eu86.gitpod.io/api/login", {
+		const response = await fetch("https://3001-dedalovitor-authenticat-lembko6r0py.ws-eu86.gitpod.io/api/login", {
 			method: "POST",
 			headers: {
 				"content-Type": "application/json"

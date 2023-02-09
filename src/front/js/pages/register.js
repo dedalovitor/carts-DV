@@ -11,7 +11,7 @@ export const Register = () => {
 	const [error, setError] = useState("");
 
 	const sendRegisterCredential = async () => {
-		const response = await fetch("https://3001-dedalovitor-finalprojec-a0jo62diwst.ws-eu86.gitpod.io/api/register", {
+		const response = await fetch("https://3001-dedalovitor-authenticat-lembko6r0py.ws-eu86.gitpod.io/api/register", {
 			method: "POST",
 			headers: {
 				"content-Type": "application/json"
