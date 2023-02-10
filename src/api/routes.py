@@ -68,3 +68,23 @@ def create_pet():
     db.session.add(new_pet)
     db.session.commit()
     return jsonify({"response": "Pet registered successfully"}), 200
+
+
+@api.route('/pets', methods=['GET'])
+@jwt_required()
+def get_all_current_user_pets():
+    user_id = get_jwt_identity()
+    pets = Pet.query.filter_by(user_id= user_id)
+    return jsonify({ "results": [x.serialize() for x in pets ]}), 200
+
+@api.route('/pet/<int:pet_id>', methods=['DELETE'])
+@jwt_required()
+def delete_pet(pet_id):
+    user_id = get_jwt_identity()
+    pet = Pet.query.get(pet_id)
+    if pet.user_id == user_id: 
+     db.session.delete(pet)
+     db.session.commit()
+     return jsonify({ "response": "Pet deleted correctly"}), 200
+     return jsonify({ "response": "Pet not deleted"}), 400
+    

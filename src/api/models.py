@@ -30,9 +30,15 @@ class Pet(db.Model):
     race = db.Column(db.String(120), unique=False, nullable=False)
     castrated = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    def __repr__(self):
-        return f'{self.name}'
     
+    def serialize(self):
+        return {
+            "name": self.name,
+            "age": self.age,
+            "race": self.race,
+            "castrated": self.castrated,
+            "id": self.id
+        }
 
 
 class User_region(db.Model):

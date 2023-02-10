@@ -13,13 +13,19 @@ export const Home = () => {
 	}, [])
 
 	const getCurrentUserPets = async () => {
-		const response = await fetch("https://3001-dedalovitor-cartsdv-kzvfvplsqkj.ws-eu86.gitpod.io/api/pets");
+		const response = await fetch("https://3001-dedalovitor-cartsdv-0t846kc4fee.ws-eu86.gitpod.io/api/pets", {
+			method: "GET",
+			headers: {
+				"content-Type": "application/json",
+				"Authorization": "Bearer " + localStorage.getItem("token")
+			}
+		});
 		const data = await response.json();
-		setPets(data.results)
+		setPets(data.results);
 	}
 
 	const createPet = async () => {
-		const response = await fetch("https://3001-dedalovitor-cartsdv-kzvfvplsqkj.ws-eu86.gitpod.io/api/pet", {
+		const response = await fetch("https://3001-dedalovitor-cartsdv-0t846kc4fee.ws-eu86.gitpod.io/api/pet", {
 			method: "POST",
 			headers: {
 				"content-Type": "application/json",
@@ -27,7 +33,20 @@ export const Home = () => {
 			},
 			body: JSON.stringify(pet)
 		});
+		if (response.ok) getCurrentUserPets();
 	}
+
+	const deletePet = async (id) => {
+		const response = await fetch("https://3001-dedalovitor-cartsdv-0t846kc4fee.ws-eu86.gitpod.io/api/pet/" + id, {
+			method: "DELETE",
+			headers: {
+				"content-Type": "application/json",
+				"Authorization": "Bearer " + localStorage.getItem("token")
+			}
+		});
+		if (response.ok) getCurrentUserPets();
+	}
+
 
 	return (
 		<div className="container">
@@ -48,14 +67,19 @@ export const Home = () => {
 						})}
 						<button className="btn btn-success" onClick={() => createPet()}>CREATE PET</button>
 					</div>
+
 					<div className="row">
-						{pets.map((pet) => {
-							return <div class="card" style="width: 18rem;">
-								<img src="..." class="card-img-top" alt="..." />
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									<a href="#" class="btn btn-primary">Go somewhere</a>
+						{pets.map((x) => {
+							return <div key={x.id} className="card" style={{ width: "18rem" }}>
+								<img className="card-img-top" src="https://www.cdc.gov/healthypets/images/pets/angry-dog.jpg?_=03873" alt="Card image cap" />
+								<div className="card-body">
+									<p className="card-text"> age: {x.age} </p>
+									<p className="card-text"> name: {x.name} </p>
+									<p className="card-text"> race: {x.race} </p>
+									castrated: <input type="checkbox" disabled className="card-text" checked={x.castrated} />
+								</div>
+								<div className="card-footer">
+									<button className="btn btn-danger" onClick={() => deletePet(x.id)}>DEL</button>
 								</div>
 							</div>
 						})}
