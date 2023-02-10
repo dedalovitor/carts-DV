@@ -64,7 +64,7 @@ def create_pet():
     body_race = request.json.get("race")
     body_castrated = request.json.get("castrated")
   
-    new_pet = Pet(name=body_name, age=body_age, race=body_race, castrated=body_castrated, user_id=user_id )
+    new_pet = Pet(name=body_name, age=int(body_age), race=body_race, castrated=body_castrated, user_id=user_id )
     db.session.add(new_pet)
     db.session.commit()
     return jsonify({"response": "Pet registered successfully"}), 200
