@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Pet
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
@@ -53,3 +53,18 @@ def user_register():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"response": "User registered successfully"}), 200
+
+
+@api.route('/pet', methods=['POST'])
+@jwt_required()
+def create_pet():
+    user_id = get_jwt_identity()
+    body_name = request.json.get("name")
+    body_age = request.json.get("age")
+    body_race = request.json.get("race")
+    body_castrated = request.json.get("castrated")
+  
+    new_pet = Pet(name=body_name, age=body_age, race=body_race, castrated=body_castrated, user_id=user_id )
+    db.session.add(new_pet)
+    db.session.commit()
+    return jsonify({"response": "Pet registered successfully"}), 200
