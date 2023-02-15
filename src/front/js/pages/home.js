@@ -13,7 +13,7 @@ export const Home = () => {
 	}, [])
 
 	const getCurrentUserPets = async () => {
-		const response = await fetch("https://3001-dedalovitor-cartsdv-0t846kc4fee.ws-eu86.gitpod.io/api/pets", {
+		const response = await fetch(process.env.BACKEND_URL + "/api/pets", {
 			method: "GET",
 			headers: {
 				"content-Type": "application/json",
@@ -25,7 +25,7 @@ export const Home = () => {
 	}
 
 	const createPet = async () => {
-		const response = await fetch("https://3001-dedalovitor-cartsdv-0t846kc4fee.ws-eu86.gitpod.io/api/pet", {
+		const response = await fetch(process.env.BACKEND_URL + "/api/pet", {
 			method: "POST",
 			headers: {
 				"content-Type": "application/json",
@@ -37,7 +37,7 @@ export const Home = () => {
 	}
 
 	const deletePet = async (id) => {
-		const response = await fetch("https://3001-dedalovitor-cartsdv-0t846kc4fee.ws-eu86.gitpod.io/api/pet/" + id, {
+		const response = await fetch(process.env.BACKEND_URL + "/api/pet/" + id, {
 			method: "DELETE",
 			headers: {
 				"content-Type": "application/json",
